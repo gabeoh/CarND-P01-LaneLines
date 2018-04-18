@@ -1,2 +1,8 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
 # IDEs and editors
 /.idea
+
+# Jupyter Notebook
+.ipynb_checkpoints
