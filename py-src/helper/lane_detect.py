@@ -3,7 +3,7 @@ import numpy as np
 
 import img_transform as itf
 
-def detect_lane_lines(image):
+def process_image(image):
     '''
     Detect lane lines from image using various image transformations
 
@@ -12,7 +12,7 @@ def detect_lane_lines(image):
     '''
 
     # printing out some stats and plotting
-    print('This image is:', type(image), 'with dimensions:', image.shape)
+    #print('This image is:', type(image), 'with dimensions:', image.shape)
     ysize = image.shape[0]
     xsize = image.shape[1]
 

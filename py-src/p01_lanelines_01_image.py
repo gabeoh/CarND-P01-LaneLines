@@ -14,7 +14,7 @@ for image_name in images:
 
     # Read the image and find lane lines from it
     image = mpimg.imread(image_path)
-    image_line_detected = ld.detect_lane_lines(image)
+    image_line_detected = ld.process_image(image)
 
     # Write line detected images to files
     image_out_path = image_dst_dir + image_name
