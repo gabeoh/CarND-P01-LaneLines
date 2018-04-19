@@ -1,6 +1,7 @@
 # Import everything needed to edit/save/watch video clips
 from moviepy.editor import VideoFileClip
 from IPython.display import HTML
+import matplotlib.pyplot as plt
 import os
 
 from helper import lane_detect as ld
@@ -24,4 +25,3 @@ for video_name in videos:
 
     # Write line detected videos to files
     clip_processed.write_videofile(video_out_path, audio=False)
-

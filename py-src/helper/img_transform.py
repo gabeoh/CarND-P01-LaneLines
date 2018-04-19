@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import cv2
 import math
 
@@ -49,7 +50,31 @@ def region_of_interest(img, vertices):
     return masked_image
 
 
-def draw_lines(img, lines, color=[255, 0, 0], thickness=2):
+def find_aggregated_line(lines_x, lines_y, y_bottom, y_top):
+    """
+    Find two end-points (bottom and top) of aggregated line for given line collection.
+    The endpoints are determined by given y coordinate range
+    :param lines_x: x coordinates of lines
+    :param lines_y: y coordinates of lines
+    :param y_bottom: bottom end y coordinate of aggregated line segment
+    :param y_top: top end y coordinate of aggregated line segment
+    :return: (x, y) coordinates of two end-points of aggregated line segment
+    """
+
+    # First, make sure that lines_x and lines_y are non-empty same size arrays
+    assert(len(lines_x) > 0 and len(lines_x) == len(lines_y))
+
+    # Compute straight lines that fit line endpoints for left and right line segments
+    line_fit = np.polyfit(lines_x, lines_y, 1)
+
+    # Find start and end points for aggregated lines
+    x_bottom = int(round((y_bottom - line_fit[1]) / line_fit[0]))
+    x_top = int(round((y_top - line_fit[1]) / line_fit[0]))
+
+    return [(x_bottom, y_bottom), (x_top, y_top)]
+
+
+def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
     """
     NOTE: this is the function you might want to use as a starting point once you want to
     average/extrapolate the line segments you detect to map out the full
@@ -66,9 +91,38 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=2):
     If you want to make the lines semi-transparent, think about combining
     this function with the weighted_img() function below
     """
+
+    # Identify line end points of each line (separate into left and right lines)
+    lines_left_x = []
+    lines_left_y = []
+    lines_right_x = []
+    lines_right_y = []
+    xsize = img.shape[1]
+    x_middle = int(round(xsize / 2))
     for line in lines:
         for x1, y1, x2, y2 in line:
-            cv2.line(img, (x1, y1), (x2, y2), color, thickness)
+            slope = (y2 - y1) / (x2 - x1)
+            if (slope > -0.9 and slope < -0.5) and (x1 < x_middle and x2 < x_middle):
+                lines_left_x.extend([x1, x2])
+                lines_left_y.extend([y1, y2])
+            elif (slope > 0.4 and slope < 0.8) and (x1 > x_middle and x2 > x_middle):
+                lines_right_x.extend([x1, x2])
+                lines_right_y.extend([y1, y2])
+            else:
+                #print('Ignore outlier lines - slope: %f, (%d, %d), (%d, %d)' % (slope, x1, y1, x2, y2))
+                pass
+
+    # Determine Y range for aggregated lines
+    ysize = img.shape[0]
+    y_bottom, y_top = ysize - 1, min(lines_left_y + lines_right_y)
+
+    # Find and draw aggregated lines for left and right line collections respectively
+    if (len(lines_left_x) > 0):
+        point_bottom, point_top = find_aggregated_line(lines_left_x, lines_left_y, y_bottom, y_top)
+        cv2.line(img, point_bottom, point_top, color, thickness)
+    if (len(lines_right_x) > 0):
+        point_bottom, point_top = find_aggregated_line(lines_right_x, lines_right_y, y_bottom, y_top)
+        cv2.line(img, point_bottom, point_top, color, thickness)
 
 
 def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
