@@ -124,6 +124,13 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
         point_bottom, point_top = find_aggregated_line(lines_right_x, lines_right_y, y_bottom, y_top)
         cv2.line(img, point_bottom, point_top, color, thickness)
 
+def draw_lines_old(img, lines, color=[255, 0, 0], thickness=2):
+    """
+    The original draw_lines function provided in the project
+    """
+    for line in lines:
+        for x1, y1, x2, y2 in line:
+            cv2.line(img, (x1, y1), (x2, y2), color, thickness)
 
 def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     """
