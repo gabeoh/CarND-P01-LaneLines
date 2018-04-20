@@ -25,7 +25,7 @@ def process_image(image):
     # mpimg.imsave(image_dst_dir + image_name_base + '_01_gray.jpg', image_gray, cmap='gray')
 
 
-    # Reduce error detection noise by blurring image
+    # Reduce edge detection noise by blurring image
     # Gaussian Blur: kernel_size = 5
     kernel_size = 5
     image_blurred = itf.gaussian_blur(image_gray, kernel_size)
