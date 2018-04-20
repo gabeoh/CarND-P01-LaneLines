@@ -8,6 +8,6 @@ __pycache__/
 .ipynb_checkpoints
 
 # Project Output
-test_images_output/
-test_images_inter_steps/
-test_videos_output/
+#test_images_output/
+#test_images_inter_steps/
+#test_videos_output/
