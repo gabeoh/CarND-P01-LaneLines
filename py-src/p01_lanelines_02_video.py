@@ -9,7 +9,7 @@ from helper import lane_detect as ld
 # Process videos under '../test_videos/'
 video_src_dir = '../test_videos/'
 video_dst_dir = '../test_videos_output/'
-videos = ['solidWhiteRight.mp4', 'solidYellowLeft.mp4']
+videos = os.listdir(video_src_dir)
 for video_name in videos:
     print('Reading "%s"...' % video_name)
     video_path = video_src_dir + video_name

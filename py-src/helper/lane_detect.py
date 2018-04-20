@@ -22,6 +22,7 @@ def process_image(image):
     # First, convert the image into gray scale
     image_gray = itf.grayscale(image)
     # plt.imshow(image_gray, cmap='gray')
+    # plt.show()
     # mpimg.imsave(image_dst_dir + image_name_base + '_01_gray.jpg', image_gray, cmap='gray')
 
 
@@ -30,6 +31,7 @@ def process_image(image):
     kernel_size = 5
     image_blurred = itf.gaussian_blur(image_gray, kernel_size)
     # plt.imshow(image_blurred, cmap='gray')
+    # plt.show()
     # mpimg.imsave(image_dst_dir + image_name_base + '_02_blur.jpg', image_blurred, cmap='gray')
 
 
@@ -39,14 +41,17 @@ def process_image(image):
     high_threshold = 150
     image_edge = itf.canny(image_blurred, low_threshold, high_threshold)
     # plt.imshow(image_edge, cmap='gray')
+    # plt.show()
     # mpimg.imsave(image_dst_dir + image_name_base + '_03_edge.jpg', image_edge, cmap='gray')
 
 
     # Find region of interest
-    vertices = np.array([[[100, ysize - 1], [420, 330], [550, 330], [900, ysize - 1]]],
+    vertices = np.array([[[0.1 * xsize, ysize - 1], [0.44 * xsize, 0.62 * ysize],
+                          [0.6 * xsize, 0.62 * ysize], [0.94 * xsize, ysize - 1]]],
                         dtype=np.int32)
     image_regioned = itf.region_of_interest(image_edge, vertices)
     # plt.imshow(image_regioned, cmap='gray')
+    # plt.show()
     # mpimg.imsave(image_dst_dir + image_name_base + '_04_regioned.jpg', image_regioned, cmap='gray')
 
 
@@ -58,12 +63,13 @@ def process_image(image):
     max_line_gap = 20
     lines = itf.hough_lines(image_regioned, rho_accu, theta_accu, hough_threshold,
                             min_line_length, max_line_gap)
-    #plt.imshow(lines)
+    # plt.imshow(lines)
+    # plt.show()
     # mpimg.imsave(image_dst_dir + image_name_base + '_05_lines_agg.jpg', lines)
 
 
     # Super impose lines on original image
     image_super = itf.weighted_img(lines, image)
-    #plt.imshow(image_super)
+    # plt.imshow(image_super)
     # mpimg.imsave(image_dst_dir + image_name_base + '_06_super_agg.jpg', image_super)
     return image_super

@@ -124,7 +124,7 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
         point_bottom, point_top = find_aggregated_line(lines_right_x, lines_right_y, y_bottom, y_top)
         cv2.line(img, point_bottom, point_top, color, thickness)
 
-def draw_lines_old(img, lines, color=[255, 0, 0], thickness=2):
+def draw_raw_lines(img, lines, color=[255, 0, 0], thickness=2):
     """
     The original draw_lines function provided in the project
     """
