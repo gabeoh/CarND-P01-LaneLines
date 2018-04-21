@@ -4,7 +4,7 @@ from IPython.display import HTML
 import matplotlib.pyplot as plt
 import os
 
-from helper import lane_detect as ld
+import helper.lane_detect as ld
 
 # Process videos under '../test_videos/'
 video_src_dir = '../test_videos/'

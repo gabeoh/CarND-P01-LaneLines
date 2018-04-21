@@ -2,7 +2,7 @@
 import matplotlib.image as mpimg
 import os
 
-from helper import lane_detect as ld
+import helper.lane_detect as ld
 
 # Process images under '../test_images/'
 image_src_dir = '../test_images/'
