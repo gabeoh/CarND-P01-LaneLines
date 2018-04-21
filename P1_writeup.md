@@ -27,7 +27,7 @@ The object of this project is to:
 My pipeline consisted of 6 steps. 
 
 **Step 1 - Grayscale**  
-Convert the image into a single-channel grayscale image.
+Convert the image to a single-channel grayscale image.
 ![Grayscale][image01]
 
 **Step 2 - Gaussian Blur**  
@@ -40,7 +40,7 @@ Detect edges using Canny Edge Detection algorithm.
 ![Canny Edges][image03]
 
 **Step 4 - Region of Interest**  
-Find region of interest and mask out areas outside of the region.
+Find the region of interest and mask out areas outside of the region.
 ![Region][image04]
 
 **Step 5 - Hough Transform**  
@@ -65,7 +65,7 @@ Transform
   - Two criteria are used for the side determination; *slope* and *x-coordinate*
   - For a line segment to belong to the left lane, the slope must be
     negative and x-coordinates of both end points should be smaller than
-    midpoint of the image
+    the midpoint of the image
   - For the right lane, similarly, positive slope and x-coordinate bigger
     than the midpoint
 - Tightened slope ranges to filter out inconsistent segments
@@ -160,4 +160,34 @@ It may be very difficult to completely eliminate the need for human guidance
 when determining such parameters.  However, if we have means of quantifying
 result qualities, we can perform a large number of iterations with varying
 parameter values.  This way, we can find a more accurate solution in a much
-more efficient manner. 
+more efficient manner.
+
+---
+
+## Optional Challenge 
+
+### The problem
+The main reason that the original pipeline did not work for the challenging
+video was the difference in the image sizes.  The `challenge.mp4` has higher
+pixel density (1280 x 720) than the other two videos (960 x 540).
+
+Because of this difference, the fixed coordinates used for the initial two
+videos were not appropriate to identify the region of interest for the
+challenging video. 
+
+### The resolution
+While the pixel density for the challenging video was higher than the other
+two videos, the ratios of the videos are identical and the relative positions
+of the region of interest remain very close across all three videos.
+
+Therefore, I used coordinates relative to the x and y sizes rather than
+fixed values.  This way, the updated pipeline was able to detect lane lines
+for all three videos.
+
+### Limitation
+An additional issue with the challenging video was that it had more color
+variations than the other two videos.  The variations were caused by road
+material differences and the shadows of roadside trees.
+
+The pipeline identified the color variation boundaries as edges, and this
+error contributed to some inaccuracy in lane line detections. 
