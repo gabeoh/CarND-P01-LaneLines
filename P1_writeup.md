@@ -68,7 +68,7 @@ Transform
     the midpoint of the image
   - For the right lane, similarly, positive slope and x-coordinate bigger
     than the midpoint
-- Tightened slope ranges to filter out inconsistent segments
+- Tighten slope ranges to filter out inconsistent segments
   - While reviewing annotated video outputs, I noticed the lane lines sometimes
     go out of the expected region
   - The problem was mitigated by tightening slope ranges and discard outliers
@@ -87,7 +87,7 @@ Transform
 - _pre-determined y-coordinates*_
   - ```y_bottom```: y-coordinate of pixels on the bottom of the image
     (```img.shape[0] - 1```)
-  - ```y_top```: minimum, or top, y-coordinate all line segments collected
+  - ```y_top```: minimum, or top, y-coordinate of all line segments collected
 
 **Aggreated Lane Lines**  
 ![Hough Lines][image05_agg]
@@ -137,8 +137,8 @@ it can be more robust against view disruptions.
 
 **2. Early Pruning**
 
-As far as we are only concerned with detecting lane lines from the image, only
-about a quarter of the image contains meaningful information.
+As far as we are concerned with detecting lane lines only, about a quarter
+of the image contains meaningful information.
 
 In the later step, the pipeline filter out the portions of processed images that
 are outside of the region of interest.  By pruning earlier, the performance of
