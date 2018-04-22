@@ -28,7 +28,8 @@ def process_image(image):
 
     # Reduce edge detection noise by blurring image
     # Gaussian Blur: kernel_size = 5
-    kernel_size = 5
+    # kernel_size = 5
+    kernel_size = 3     # **Review suggestion
     image_blurred = itf.gaussian_blur(image_gray, kernel_size)
     # plt.imshow(image_blurred, cmap='gray')
     # plt.show()
@@ -56,11 +57,15 @@ def process_image(image):
 
 
     # Detect lines using Hough transform
-    rho_accu = 1
+    # rho_accu = 1
+    rho_accu = 2                # **Review suggestion
     theta_accu = np.pi / 180
-    hough_threshold = 20
-    min_line_length = 30
-    max_line_gap = 20
+    # hough_threshold = 20
+    # min_line_length = 30
+    # max_line_gap = 20
+    hough_threshold = 50        # **Review suggestion
+    min_line_length = 100       # **Review suggestion
+    max_line_gap = 160          # **Review suggestion
     lines = itf.hough_lines(image_regioned, rho_accu, theta_accu, hough_threshold,
                             min_line_length, max_line_gap)
     # plt.imshow(lines)
